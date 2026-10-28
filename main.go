@@ -13,7 +13,8 @@ import (
 )
 
 const pddiktiSearchURL = "https://pddikti.kemdiktisaintek.go.id/api/pencarian/enc/all/"
-const pddiktiRequestInterval = 200 * time.Millisecond
+const pddiktiRequestInterval = time.Second
+const missingNIMLimit = 10
 
 type Config struct {
 	Universitas string `json:"universitas"`
@@ -122,22 +123,44 @@ func searchStudents(client *http.Client, endpoint string, config Config, nim str
 	return matches, nil
 }
 
-func searchConsecutiveStudents(client *http.Client, endpoint string, config Config, interval time.Duration) ([]Student, string, error) {
+func reportProgress(progress io.Writer, format string, args ...any) error {
+	if _, err := fmt.Fprintf(progress, format, args...); err != nil {
+		return fmt.Errorf("menampilkan progress pencarian: %w", err)
+	}
+	return nil
+}
+
+func searchConsecutiveStudents(client *http.Client, endpoint string, config Config, interval time.Duration, progress io.Writer) ([]Student, string, error) {
 	students := make([]Student, 0)
+	missingCount := 0
 	for attendance := config.AbsenMulai; attendance <= 999; attendance++ {
 		nim, err := config.nim(attendance)
 		if err != nil {
 			return nil, "", err
 		}
 
+		if err := reportProgress(progress, "Mencari NIM %s...\n", nim); err != nil {
+			return nil, "", err
+		}
 		matches, err := searchStudents(client, endpoint, config, nim)
 		if err != nil {
 			return nil, "", fmt.Errorf("mencari NIM %s: %w", nim, err)
 		}
 		if len(matches) == 0 {
-			return students, nim, nil
+			missingCount++
+			if err := reportProgress(progress, "NIM %s tidak ditemukan (%d/%d berturut-turut).\n", nim, missingCount, missingNIMLimit); err != nil {
+				return nil, "", err
+			}
+			if missingCount >= missingNIMLimit {
+				return students, nim, nil
+			}
+		} else {
+			missingCount = 0
+			students = append(students, matches...)
+			if err := reportProgress(progress, "NIM %s ditemukan.\n%s", nim, formatResults(matches, "", "")); err != nil {
+				return nil, "", err
+			}
 		}
-		students = append(students, matches...)
 
 		if interval > 0 && attendance < 999 {
 			time.Sleep(interval)
@@ -175,7 +198,7 @@ func main() {
 	}
 
 	client := &http.Client{Timeout: 15 * time.Second}
-	students, missingNIM, err := searchConsecutiveStudents(client, pddiktiSearchURL, config, pddiktiRequestInterval)
+	students, missingNIM, err := searchConsecutiveStudents(client, pddiktiSearchURL, config, pddiktiRequestInterval, os.Stdout)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
@@ -186,9 +209,11 @@ func main() {
 	}
 	fmt.Printf("Ditemukan %d data mahasiswa.\n", len(students))
 	if missingNIM != "" {
-		fmt.Printf("Pencarian dihentikan pada NIM pertama yang tidak ditemukan: %s\n", missingNIM)
+		fmt.Printf("Pencarian dihentikan setelah %d NIM kosong berturut-turut, terakhir %s.\n", missingNIMLimit, missingNIM)
 	} else {
 		fmt.Println("Seluruh rentang nomor absen sampai 999 sudah diperiksa.")
 	}
-	fmt.Print(formatResults(students, missingNIM, config.Universitas))
+	if len(students) == 0 {
+		fmt.Print(formatResults(students, missingNIM, config.Universitas))
+	}
 }
