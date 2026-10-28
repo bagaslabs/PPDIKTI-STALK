@@ -17,7 +17,7 @@ Atur nilai di `config.json`:
 
 Hasil Keluara `list.txt`:
 
-```json
+```txt
   NIM 261910201072
   Nama: BAGAS WICAKSONO
   NIM: 261910201072
