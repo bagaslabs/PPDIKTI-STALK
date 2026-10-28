@@ -1,7 +1,7 @@
 # PPDIKTI Stalk
 
-Aplikasi Go untuk mencari data mahasiswa melalui PDDikti berdasarkan universitas dan NIM.
-
+Aplikasi Go untuk mencari data mahasiswa melalui PDDikti API berdasarkan universitas dan NIM.
+endpoint: https://pddikti.kemdiktisaintek.go.id/api/pencarian/enc/all/
 ## Konfigurasi
 
 Atur nilai di `config.json`:
@@ -14,6 +14,18 @@ Atur nilai di `config.json`:
   "format": "1910201"
 }
 ```
+
+Hasil Keluara `list.txt`:
+
+```json
+  NIM 261910201072
+  Nama: BAGAS WICAKSONO
+  NIM: 261910201072
+  Universitas: UNIVERSITAS JEMBER
+  Program Studi: TEKNIK ELEKTRO
+  ID: gti0ngG5mbKc2LIMvzLyhjQP0BZJLOT-FPm3TV9fSkrH3YP72tKvmCA9SqEnVw-Mr376Bg==
+```
+ID dapat digunakan untuk mencari detail mahasiswa menggunakan url: https://pddikti.kemdiktisaintek.go.id/detail-mahasiswa/ID
 
 NIM dibentuk dari `angkatan + format + absen`, dengan nomor absen selalu ditulis dalam tiga digit. Contoh konfigurasi di atas menghasilkan NIM pertama `261910201001`.
 
