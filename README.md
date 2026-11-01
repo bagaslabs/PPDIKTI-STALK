@@ -233,23 +233,7 @@ Contoh `config.json`:
 }
 ```
 
-<<<<<<< HEAD
-Hasil Keluara `list.txt`:
-
-```txt
-  NIM 261910201072
-  Nama: BAGAS WICAKSONO
-  NIM: 261910201072
-  Universitas: UNIVERSITAS JEMBER
-  Program Studi: TEKNIK ELEKTRO
-  ID: gti0ngG5mbKc2LIMvzLyhjQP0BZJLOT-FPm3TV9fSkrH3YP72tKvmCA9SqEnVw-Mr376Bg==
-```
-ID dapat digunakan untuk mencari detail mahasiswa menggunakan url: https://pddikti.kemdiktisaintek.go.id/detail-mahasiswa/ID
-
-NIM dibentuk dari `angkatan + format + absen`, dengan nomor absen selalu ditulis dalam tiga digit. Contoh konfigurasi di atas menghasilkan NIM pertama `261910201001`.
-=======
 NIM dibentuk dari `angkatan + format + absen`, dengan nomor absen selalu tiga digit. Contoh konfigurasi tersebut menghasilkan NIM pertama `261910201001`.
->>>>>>> cea42e8 (Update PDDikti CLI and API documentation)
 
 ## Menjalankan CLI
 
