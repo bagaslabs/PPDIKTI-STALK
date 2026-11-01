@@ -235,6 +235,35 @@ Contoh `config.json`:
 
 NIM dibentuk dari `angkatan + format + absen`, dengan nomor absen selalu tiga digit. Contoh konfigurasi tersebut menghasilkan NIM pertama `261910201001`.
 
+```json
+Nama: BAGAS WICAKSONO
+NIM: 261910201072
+Universitas: UNIVERSITAS JEMBER
+Program Studi: TEKNIK ELEKTRO
+ID: ytqVUm0oI22la2byWqR3BQrCktJT05nvx2eWHiMQJ6tWN8L3S-hC0N-TQZYzh8sNU4hqOQ==
+Detail:
+{
+  "status": "success",
+  "data": {
+    "id": "MxxkFVh3aNawRS0LvMSnaIz5di_lBvqewk7pIDkONoUgP3KQ1G53gKz5E-kP639s2cbSWw==",
+    "nama_pt": "Universitas Jember",
+    "kode_pt": "001025  ",
+    "kode_prodi": "20201",
+    "prodi": "Teknik Elektro",
+    "nama": "BAGAS WICAKSONO",
+    "nim": "261910201072",
+    "jenis_daftar": "Peserta didik baru",
+    "id_pt": "sGEpjYh3ihx48SvzDSBdmAHMZd0R-fYOLeCADKvWyjrOtowvSVa46GT3W1aLI12b6b4iEw==",
+    "id_sms": "_leqT5r_0Sx7eSu8fZkc245FTlvU63PmMhp8vhrXUOuk8oMknEtUi1lB4Po_Jw0VDJlB6w==",
+    "jenis_kelamin": "L",
+    "jenjang": "Sarjana",
+    "status_saat_ini": "Aktif-2026/2027 Ganjil",
+    "tanggal_masuk": "2026-08-18"
+  }
+}
+```
+
+
 ## Menjalankan CLI
 
 CLI disediakan sebagai contoh penggunaan library. Dari folder proyek:
