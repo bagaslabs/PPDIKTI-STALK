@@ -235,12 +235,14 @@ Contoh `config.json`:
 
 NIM dibentuk dari `angkatan + format + absen`, dengan nomor absen selalu tiga digit. Contoh konfigurasi tersebut menghasilkan NIM pertama `261910201001`.
 
-```json
+``` txt
 Nama: BAGAS WICAKSONO
 NIM: 261910201072
 Universitas: UNIVERSITAS JEMBER
 Program Studi: TEKNIK ELEKTRO
 ID: ytqVUm0oI22la2byWqR3BQrCktJT05nvx2eWHiMQJ6tWN8L3S-hC0N-TQZYzh8sNU4hqOQ==
+```
+```json
 Detail:
 {
   "status": "success",
